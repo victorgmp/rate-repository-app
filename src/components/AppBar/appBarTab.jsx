@@ -1,5 +1,6 @@
 import React from "react";
 import { TouchableWithoutFeedback } from "react-native";
+import { Link } from "react-router-native";
 
 import Subheading from "../Subheading";
 
@@ -8,12 +9,15 @@ import Subheading from "../Subheading";
 //   },
 // });
 
-const AppBarTab = ({ name }) => (
-  <TouchableWithoutFeedback>
+const AppBarTab = ({ name, link }) => (
+  <Link
+    to={link}
+    component={TouchableWithoutFeedback}
+  >
     <Subheading color="textWhite">
       {name}
     </Subheading>
-  </TouchableWithoutFeedback>
+  </Link>
 );
 
 export default AppBarTab;
