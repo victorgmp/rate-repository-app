@@ -7,6 +7,8 @@ const theme = {
     textWhite: "#ffffff",
     itembackground: "#ffffff",
     background: "#e1e4e8",
+    error: "#d73a4a",
+    inputBorder: "#c8c8c8",
   },
   fontSizes: {
     body: 14,

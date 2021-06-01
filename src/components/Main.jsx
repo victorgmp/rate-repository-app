@@ -6,7 +6,7 @@ import theme from "../theme";
 
 import AppBar from './AppBar';
 import RepositoryList from './RepositoryList';
-import SignIn from './SignIn';
+import SignIn from "./SignIn";
 
 const styles = StyleSheet.create({
   container: {
