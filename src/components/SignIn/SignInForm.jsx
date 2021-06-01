@@ -11,10 +11,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const SignIn = () => {
-  const onSubmit = () => {
-    console.log('here');
-  };
+const SignInForm = ({ onSubmit }) => {
 
   return (
     <View>
@@ -27,4 +24,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignInForm;
