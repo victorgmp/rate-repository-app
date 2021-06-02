@@ -1,55 +1,102 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 
-import theme from "../../theme";
-import Counts from './Counts';
-import ItemInfo from './ItemInfo';
+import theme from '../../theme';
+
+import Text from '../Text';
+import CountItem from './CountItem';
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
     padding: 15,
-    backgroundColor: theme.colors.itembackground,
   },
-  listHeader: {
-    marginBottom: 10,
+  topContainer: {
+    flexDirection: 'row',
+    marginBottom: 15,
   },
-  infoContainer: {
-    display: "flex",
-    flexDirection: "row",
+  bottomContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
-  image: {
-    borderRadius: 7,
+  avatarContainer: {
+    flexGrow: 0,
+    marginRight: 20,
   },
-  btnContainer: {
+  contentContainer: {
+    flexGrow: 1,
+    flexShrink: 1,
+  },
+  nameText: {
+    marginBottom: 5,
+  },
+  descriptionText: {
+    flexGrow: 1,
+  },
+  avatar: {
+    width: 45,
+    height: 45,
+    borderRadius: theme.roundness,
+  },
+  languageContainer: {
     marginTop: 10,
+    flexDirection: 'row',
+  },
+  languageText: {
+    color: 'white',
+    backgroundColor: theme.colors.primary,
+    borderRadius: theme.roundness,
+    flexGrow: 0,
+    paddingVertical: 3,
+    paddingHorizontal: 6,
   },
 });
 
-export const formatCounts = (num) => {
-  return num > 999 ? (num / 1000).toFixed(1) + "k" : num;
-};
+const RepositoryItem = ({ repository }) => {
+  const {
+    fullName,
+    description,
+    language,
+    forksCount,
+    stargazersCount,
+    ratingAverage,
+    reviewCount,
+    ownerAvatarUrl,
+  } = repository;
 
-const RepositoryItem = ({ item, detailView }) => (
-  // const RepositoryItem = ({ fullName, description, language, forksCount, stargazersCount, ratingAverage, reviewCount, ownerAvatarUrl }) => (
-  <View style={[styles.container, detailView && styles.listHeader]}>
-    <View style={styles.infoContainer}>
-      <Image
-        style={styles.image}
-        source={{ uri: item.ownerAvatarUrl, width: 50, height: 50 }}
-      />
-      <ItemInfo
-        fullName={item.fullName}
-        description={item.description}
-        language={item.language}
-      />
+  return (
+    <View style={styles.container}>
+      <View style={styles.topContainer}>
+        <View style={styles.avatarContainer}>
+          <Image source={{ uri: ownerAvatarUrl }} style={styles.avatar} />
+        </View>
+        <View style={styles.contentContainer}>
+          <Text
+            style={styles.nameText}
+            fontWeight="bold"
+            fontSize="subheading"
+            numberOfLines={1}
+          >
+            {fullName}
+          </Text>
+          <Text style={styles.descriptionText} color="textSecondary">
+            {description}
+          </Text>
+          {language ? (
+            <View style={styles.languageContainer}>
+              <Text style={styles.languageText}>{language}</Text>
+            </View>
+          ) : null}
+        </View>
+      </View>
+      <View style={styles.bottomContainer}>
+        <CountItem count={stargazersCount} label="Stars" />
+        <CountItem count={forksCount} label="Forks" />
+        <CountItem count={reviewCount} label="Reviews" />
+        <CountItem count={ratingAverage} label="Rating" />
+      </View>
     </View>
-    <Counts
-      stars={formatCounts(item.stargazersCount)}
-      forksCount={formatCounts(item.forksCount)}
-      reviewCount={formatCounts(item.reviewCount)}
-      ratingAverage={formatCounts(item.ratingAverage)}
-    />
-  </View>
-);
+  );
+};
 
 export default RepositoryItem;

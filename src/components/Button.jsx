@@ -1,30 +1,35 @@
-import React from "react";
-import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import React from 'react';
+import { TouchableWithoutFeedback, View, StyleSheet } from 'react-native';
 
-import theme from "../theme";
-import Text from "./Text";
+import Text from './Text';
+import theme from '../theme';
 
 const styles = StyleSheet.create({
-  btnContainer: {
-    display: "flex",
+  container: {
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    minWidth: 64,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: theme.colors.primary,
-    borderRadius: 5,
+    borderRadius: theme.roundness,
   },
-  btn: {
-    padding: 15,
-    alignSelf: "center",
+  text: {
+    color: 'white',
   },
 });
 
-const Button = ({ name, onPress, style, outerBtnStyle }) => {
+const Button = ({ children, style, ...props }) => {
+  const buttonStyle = [styles.container, style];
+
   return (
-    <View style={[styles.btnContainer, outerBtnStyle]}>
-      <TouchableWithoutFeedback onPress={onPress}>
-        <Text color="textWhite" fontWeight="bold" style={[styles.btn, style]}>
-          {name}
+    <TouchableWithoutFeedback {...props}>
+      <View style={buttonStyle}>
+        <Text style={styles.text} fontWeight="bold">
+          {children}
         </Text>
-      </TouchableWithoutFeedback>
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

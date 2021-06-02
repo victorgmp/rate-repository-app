@@ -6,20 +6,29 @@ import FormikTextInput from '../FormikTextInput';
 import Button from "../Button";
 
 const styles = StyleSheet.create({
-  textInputContainer: {
-    marginVertical: 15,
+  container: {
+    backgroundColor: 'white',
+    padding: 15,
+  },
+  fieldContainer: {
+    marginBottom: 15,
   },
 });
 
 const SignInForm = ({ onSubmit }) => {
-
   return (
-    <View>
-      <FormikTextInput name="username" placeholder="Username" />
-      <View style={styles.textInputContainer}>
-        <FormikTextInput name="password" placeholder="Password" secureTextEntry />
+    <View style={styles.container}>
+      <View style={styles.fieldContainer}>
+        <FormikTextInput name="username" placeholder="Username" />
       </View>
-      <Button name="Sign in" onPress={onSubmit} />
+      <View style={styles.fieldContainer}>
+        <FormikTextInput
+          name="password"
+          placeholder="Password"
+          secureTextEntry
+        />
+      </View>
+      <Button onPress={onSubmit}>Sign in</Button>
     </View>
   );
 };
