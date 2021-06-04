@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const CountItem = ({ label, count }) => {
+const CountItem = ({ label, count, testID }) => {
   return (
     <View style={styles.countItem}>
-      <Text style={styles.countItemCount} fontWeight="bold">
+      <Text style={styles.countItemCount} fontWeight="bold" testID={testID}>
         {formatInThousands(count)}
       </Text>
       <Text color="textSecondary">{label}</Text>

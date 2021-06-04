@@ -76,24 +76,25 @@ const RepositoryItem = ({ repository }) => {
             fontWeight="bold"
             fontSize="subheading"
             numberOfLines={1}
+            testID="fullname"
           >
             {fullName}
           </Text>
-          <Text style={styles.descriptionText} color="textSecondary">
+          <Text style={styles.descriptionText} color="textSecondary" testID="description">
             {description}
           </Text>
           {language ? (
             <View style={styles.languageContainer}>
-              <Text style={styles.languageText}>{language}</Text>
+              <Text style={styles.languageText} testID="language">{language}</Text>
             </View>
           ) : null}
         </View>
       </View>
       <View style={styles.bottomContainer}>
-        <CountItem count={stargazersCount} label="Stars" />
-        <CountItem count={forksCount} label="Forks" />
-        <CountItem count={reviewCount} label="Reviews" />
-        <CountItem count={ratingAverage} label="Rating" />
+        <CountItem count={stargazersCount} label="Stars" testID="stargazer-count"/>
+        <CountItem count={forksCount} label="Forks" testID="forks-count"/>
+        <CountItem count={reviewCount} label="Reviews" testID="review-count"/>
+        <CountItem count={ratingAverage} label="Rating" testID="rating"/>
       </View>
     </View>
   );
