@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import * as Linking from "expo-linking";
+import { Link } from "react-router-native";
 
 import theme from '../../theme';
 
 import Text from '../Text';
 import CountItem from './CountItem';
+import Button from "../Button";
 
 const styles = StyleSheet.create({
   container: {
@@ -50,10 +53,17 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     paddingHorizontal: 6,
   },
+  listHeader: {
+    marginBottom: 10,
+  },
+  btnContainer: {
+    marginTop: 10,
+  },
 });
 
-const RepositoryItem = ({ repository }) => {
+const RepositoryItem = ({ repository, detailView }) => {
   const {
+    id,
     fullName,
     description,
     language,
@@ -62,41 +72,53 @@ const RepositoryItem = ({ repository }) => {
     ratingAverage,
     reviewCount,
     ownerAvatarUrl,
+    url,
   } = repository;
 
+  const openGithub = () => {
+    Linking.openURL(url);
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.topContainer}>
-        <View style={styles.avatarContainer}>
-          <Image source={{ uri: ownerAvatarUrl }} style={styles.avatar} />
+    <Link to={`/repository/${id}`} component={TouchableOpacity}>
+      <View style={[styles.container, detailView && styles.listHeader]}>
+        <View style={styles.topContainer}>
+          <View style={styles.avatarContainer}>
+            <Image source={{ uri: ownerAvatarUrl }} style={styles.avatar} />
+          </View>
+          <View style={styles.contentContainer}>
+            <Text
+              style={styles.nameText}
+              fontWeight="bold"
+              fontSize="subheading"
+              numberOfLines={1}
+              testID="fullname"
+            >
+              {fullName}
+            </Text>
+            <Text style={styles.descriptionText} color="textSecondary" testID="description">
+              {description}
+            </Text>
+            {language ? (
+              <View style={styles.languageContainer}>
+                <Text style={styles.languageText} testID="language">{language}</Text>
+              </View>
+            ) : null}
+          </View>
         </View>
-        <View style={styles.contentContainer}>
-          <Text
-            style={styles.nameText}
-            fontWeight="bold"
-            fontSize="subheading"
-            numberOfLines={1}
-            testID="fullname"
-          >
-            {fullName}
-          </Text>
-          <Text style={styles.descriptionText} color="textSecondary" testID="description">
-            {description}
-          </Text>
-          {language ? (
-            <View style={styles.languageContainer}>
-              <Text style={styles.languageText} testID="language">{language}</Text>
+        <View style={styles.bottomContainer}>
+          <CountItem count={stargazersCount} label="Stars" testID="stargazer-count" />
+          <CountItem count={forksCount} label="Forks" testID="forks-count" />
+          <CountItem count={reviewCount} label="Reviews" testID="review-count" />
+          <CountItem count={ratingAverage} label="Rating" testID="rating" />
+        </View>
+          {detailView && (
+            <View style={styles.btnContainer}>
+              <Button onPress={openGithub}>Open in GitHub</Button>
             </View>
-          ) : null}
-        </View>
+          )}
       </View>
-      <View style={styles.bottomContainer}>
-        <CountItem count={stargazersCount} label="Stars" testID="stargazer-count"/>
-        <CountItem count={forksCount} label="Forks" testID="forks-count"/>
-        <CountItem count={reviewCount} label="Reviews" testID="review-count"/>
-        <CountItem count={ratingAverage} label="Rating" testID="rating"/>
-      </View>
-    </View>
+    </Link>
   );
 };
 
